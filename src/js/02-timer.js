@@ -9,7 +9,7 @@ const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
 const secondsValue = document.querySelector('[data-seconds]');
 
-let selectedDate;
+let selectedDate = null;
 
 function convertMs(ms) {
   const second = 1000;
@@ -36,7 +36,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    const selectedDate = selectedDates[0];
+     selectedDate = selectedDates[0];
 
     if (selectedDate < new Date()) {
       Notiflix.Notify.failure('Please choose a date in the future');
@@ -50,7 +50,7 @@ const options = {
 flatpickr(datetimePicker, options);
 
 startButton.addEventListener('click', () => {
-  const selectedDate = flatpickr.parseDate(datetimePicker.value);
+  
   const currentDate = new Date();
   const difference = selectedDate - currentDate;
 
