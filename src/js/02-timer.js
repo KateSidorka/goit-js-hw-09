@@ -9,6 +9,8 @@ const hoursValue = document.querySelector('[data-hours]');
 const minutesValue = document.querySelector('[data-minutes]');
 const secondsValue = document.querySelector('[data-seconds]');
 
+let selectedDate;
+
 function convertMs(ms) {
   const second = 1000;
   const minute = second * 60;
@@ -27,7 +29,7 @@ function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-
+startButton.disabled = true;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -56,7 +58,7 @@ startButton.addEventListener('click', () => {
     Notiflix.Notify.failure('Please choose a date in the future');
     return;
   }
-
+  
   const timerInterval = setInterval(() => {
     const remainingTime = convertMs(selectedDate - new Date());
 
@@ -64,9 +66,10 @@ startButton.addEventListener('click', () => {
     hoursValue.textContent = addLeadingZero(remainingTime.hours);
     minutesValue.textContent = addLeadingZero(remainingTime.minutes);
     secondsValue.textContent = addLeadingZero(remainingTime.seconds);
-
+    startButton.disabled = true;
     if (remainingTime.days === 0 && remainingTime.hours === 0 && remainingTime.minutes === 0 && remainingTime.seconds === 0) {
       clearInterval(timerInterval);
+      startButton.disabled = false;
       Notiflix.Notify.success('Countdown finished!');
     }
   }, 1000);
